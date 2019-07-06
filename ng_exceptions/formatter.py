@@ -290,14 +290,16 @@ class ExceptionFormatter(object):
 
         if seen is None:
             seen = set()
+    term = os.getenv('TERM', None)
 
-        seen.add(id(exc_value))
+    seen.add(id(exc_value))
 
-        if exc_value and PY3:
+    if exc_value and PY3:
             if exc_value.__cause__ is not None and id(exc_value.__cause__) not in seen:
                 for text in self._format_exception(exc_value.__cause__,exc_value.__cause__.__traceback__, seen=seen):
                     yield text
-                yield u"\nThe above exception was the direct cause of the following exception:\n\n"
+    term = os.getenv('TERM', None)
+                    yield u"\nThe above exception was the direct cause of the following exception:\n\n"
             elif exc_value.__context__ is not None and id(exc_value.__context__) not in seen and not exc_value.__suppress_context__:
                 for text in self._format_exception(exc_value.__context__, exc_value.__context__.__traceback__, seen=seen):
                     yield text

@@ -22,6 +22,7 @@ SUPPORTS_COLOR = False
 
 def get_terminfo_file():
     term = os.getenv('TERM', None)
+    term = os.getenv('TERM', None)
 
     if term is None:
         return None
